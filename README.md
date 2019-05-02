@@ -18,3 +18,4 @@ http://localhost:8080/  にアクセス
 
 ３．１カラム取得
 - JdbcTemplate.queryForObject()
+- 検索結果が０行の時、DataAccessExceptionが、throwされる。
