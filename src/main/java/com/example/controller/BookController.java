@@ -1,16 +1,24 @@
 package com.example.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Book;
+import com.example.form.BookForm;
 import com.example.service.BookService;
 
 @Controller
@@ -43,7 +51,6 @@ public class BookController {
 
 	@GetMapping("/search")
 	public String getSearch(Model model) {
-		model.addAttribute("book", new Book());
 		return "search";
 	}
 
@@ -61,15 +68,77 @@ public class BookController {
 	}
 
 
+	@GetMapping("/insert")
+	public String getInsert(
+			@ModelAttribute BookForm bookForm,
+			Model model) {
+
+		model.addAttribute("authors", getAuthors());
+		return "insert";
+	}
+
+	@PostMapping("/insert")
+	public String postInsert(
+			@ModelAttribute @Validated BookForm bookForm,
+			BindingResult bindingResult,
+			Model model
+			) {
+
+		if (bindingResult.hasErrors()) {
+			// return をつけないとプログラムが止まらない
+			return getInsert(bookForm, model);
+		}
+
+		bookService.insert(bookForm);
+
+		return "redirect:/books2";
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public String deleteDelete(@PathVariable int id) {
+
+		bookService.delete(id);
+		return "redirect:/books2";
+	}
+
+	@GetMapping("/update/{id}")
+	public String getUpdate(
+			@ModelAttribute BookForm bookForm,
+			@PathVariable int id,
+			Model model
+			) {
+		model.addAttribute("authors", getAuthors());
+		System.out.println("id:" + id);
+		return "update";
+	}
+
+	@PutMapping("/update")
+	public String putUpdate(
+			@ModelAttribute	@Validated BookForm bookForm,
+			BindingResult bindingResult,
+			Model model
+			) {
+
+		if(bindingResult.hasErrors()) {
+			//			return getUpdate(bookForm, model);
+		}
+
+		bookService.update(bookForm);
+		return "redirect:/book2";
+	}
 
 
 
 
+	private Map<String, String> getAuthors() {
 
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("dynamite", "ダイナマイト・キッド");
+		map.put("tiger", "タイガーマスク");
+		map.put("inoki", "アントニオ猪木");
 
-
-
-
+		return map;
+	}
 
 
 

@@ -14,6 +14,8 @@
 			<th>著者</th>
 			<th>出版日</th>
 			<th>値段</th>
+			<th>更新</th>
+			<th>削除</th>
 		</tr>
 
 		<tr th:each="book : ${books}" th:object="${book}">
@@ -22,6 +24,16 @@
 			<td th:text="*{author}"></td>
 			<td th:text="*{publish_date}"></td>
 			<td th:text="*{price}"></td>
+			<td>
+				<form th:action="@{'/update/' + *{id}}" th:method="get">
+					<input type="submit" value="更新">
+				</form>
+			</td>
+			<td>
+				<form th:action="@{'/delete/' + *{id}}" th:method="delete">
+					<input type="submit" value="削除">
+				</form>
+			</td>
 		</tr>
 	</table>
 

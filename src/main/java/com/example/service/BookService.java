@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.dao.BookDao;
 import com.example.entity.Book;
+import com.example.form.BookForm;
 
 @Service
 @Transactional
@@ -30,5 +31,17 @@ public class BookService {
 
 	public Optional<List<Map<String, Object>>> findOne(String id) {
 		return bookDao.findOne(id);
+	}
+
+	public int insert(BookForm bookForm) {
+		return bookDao.insert(bookForm);
+	}
+
+	public int delete(int id) {
+		return bookDao.delete(id);
+	}
+
+	public int update(BookForm bookForm) {
+		return bookDao.update(bookForm);
 	}
 }
