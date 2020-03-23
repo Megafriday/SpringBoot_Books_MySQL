@@ -33,6 +33,10 @@ public class BookService {
 		return bookDao.findOne(id);
 	}
 
+	public int findCount() {
+		return bookDao.findCount();
+	}
+
 	public int insert(BookForm bookForm) {
 		return bookDao.insert(bookForm);
 	}

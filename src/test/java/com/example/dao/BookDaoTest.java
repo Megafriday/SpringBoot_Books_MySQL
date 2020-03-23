@@ -34,4 +34,12 @@ public class BookDaoTest {
 		assertEquals(book.getTitle(), "テスト用Java入門");
 	}
 
+	@Test
+	public void testFindCount() {
+
+		int count = bookDao.findCount();
+		assertEquals(count, 3);
+
+	}
+
 }

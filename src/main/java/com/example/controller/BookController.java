@@ -67,6 +67,12 @@ public class BookController {
 		return "search";
 	}
 
+	@GetMapping("/count")
+	public String getCount(Model model) {
+		int count = bookService.findCount();
+		model.addAttribute("count", count);
+		return "count";
+	}
 
 	@GetMapping("/insert")
 	public String getInsert(

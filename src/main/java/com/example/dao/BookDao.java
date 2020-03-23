@@ -59,6 +59,13 @@ public class BookDao {
 
 
 	// １カラム取得なら、JdbcTemplate.queryForObject()
+	public int findCount() {
+
+		String sql = "select count(*) from books";
+
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+
+	}
 
 
 	// insert, update, delete は、JdbcTemplate.update()を使う
